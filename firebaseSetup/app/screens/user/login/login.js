@@ -1,9 +1,11 @@
 import React from 'react'
-import {View, Text, TextInput, TouchableOpacity} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, Button} from 'react-native'
 import {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigation}  from 'react-navigation-hooks'
 import firebase from 'react-native-firebase'
+import { createDrawerNavigator, useIsDrawerOpen } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 import actions from '../action'
 
 
@@ -16,8 +18,18 @@ function Login(){
 
     // const counter = useSelector(state => state.mail)
     //  const currentUser = useSelector(state => state.pass)
-
+    const Drawer = createDrawerNavigator();
     return(
+      <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+    )
+
+    function HomeScreen({ navigation }) {
+      return (
         <View style={{flex:1, justifyContent:"center",alignItems:"center"}}>
             <TextInput
                 style={{fontSize:20}}
@@ -36,8 +48,26 @@ function Login(){
                 onPress={()=>loginValidation()} >
                 <Text>Login</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={{backgroundColor:'red', height:25, width:60,
+                alignItems:"center", justifyContent:"center", marginTop:10}}
+                onPress={()=>navigation.openDrawer()} >
+                <Text>Drawer</Text>
+            </TouchableOpacity>
         </View>
-    )
+      );
+    }
+
+    function NotificationsScreen({ navigation }) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Button onPress={() => navigation.goBack()} title="Go back home" />
+        </View>
+      );
+    }
+
+
+
+
 
     function loginValidation(){
       var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -53,10 +83,23 @@ function Login(){
           return false
         }
         let data = {mail,pass}
+        createUserDatabase();
         dispatch(actions.loginUser(data))
-        navigate('userscreen')
+        //navigate('userscreen')
       }
 
+      function createUserDatabase(getuid){
+        // the_uid = userId
+        const data = {
+            contact: mob,
+            userId: getuid
+        }
+        firebase.firestore().doc(`users/${getuid}`).set(data)
+            .then(() => {
+                console.log("New poll data sent!")
+            })
+            .catch(error => console.log("Error when creating new poll.", error));
+    }
     
     
      

@@ -36,6 +36,7 @@ target 'fireSetup' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   
+  
 
   target 'fireSetupTests' do
     inherit! :search_paths

@@ -13,16 +13,20 @@ function UserScreen() {
     const [pass, setmail] = useState(pass)
     const [mob, setmob] = useState(mob)
     const [con, setcon] = useState(con)
+    const [check, setCheck] = useState(check)
 
     console.log("mobile Number",mob)
     const { navigate } = useNavigation();
-    //  const counter = useSelector(state => state.mail)
-    //  const currentUser = useSelector(state => state.pass)
+    //   const counter = useSelector(state => state.mail)
+    //   const currentUser = useSelector(state => state.pass)
+    //   console.log("print the saved email",counter)
 
     const dispatch = useDispatch()
 
     console.log("this is the usename",mail)
     console.log("this is the usename",pass)
+    console.log("this is conformation",con)
+
 
     return(
         <View style={{flex:1, justifyContent:"center",alignItems:"center"}}>
@@ -30,7 +34,7 @@ function UserScreen() {
            justifyContent:'center', borderRadius:10,borderWidth:2}}>
                 <TextInput
                 style={{fontSize:20}}
-                placeholder="Enter the emailId"
+                placeholder="Enter the email"
                 value={mail}
                 onChangeText={text => setMail(text)}
                 >
@@ -75,6 +79,18 @@ function UserScreen() {
                 onPress={()=>forgetPass()} >
                 <Text>Forget Password</Text>
             </TouchableOpacity>
+            <TextInput
+            style={{fontSize:20, marginTop:10}}
+            placeholder="Enter the Conformation Number"
+            value={check}
+            keyboardType="number-pad"
+            onChangeText={text => setCheck(text)}>
+            </TextInput>
+            <TouchableOpacity style={{backgroundColor:'red', height:25, width:60,marginTop:10,
+                alignItems:"center", justifyContent:"center"}}
+                onPress={()=>checkVerification()} >
+                <Text>Check</Text>
+            </TouchableOpacity>
         </View>
     )
 
@@ -104,14 +120,51 @@ function UserScreen() {
         //     })
 
     }
+
+    function checkVerification(){
+        if (check.length == 6) {
+            con
+              .confirm(check)
+              .then(user => {
+                //this.setState({ userId: user.uid })
+                createUserDatabase(user.uid)
+                alert(`Verified! ${user.uid}`)
+              })
+              .catch(error => {
+                alert(error.message)
+                console.log(error)
+              })
+          } else {
+            alert('Please enter a 6 digit OTP code.')
+          }
+    }
+
+    function createUserDatabase(getuid){
+        // the_uid = userId
+        const data = {
+            contact: mob,
+            userId: getuid
+        }
+        firebase.firestore().doc(`users/${getuid}`).set(data)
+            .then(() => {
+                console.log("New poll data sent!")
+            })
+            .catch(error => console.log("Error when creating new poll.", error));
+    }
+   
     function mobLogin(){
-        firebase.auth().signInWithPhoneNumber(mob)
-        .then(
-            console.log("entered here")
-            // con => setcon(con)
-            )
-        .catch(error => this.setState({ message: `Sign In With Phone Number Error: ${error.message}` }));
-    };
+        firebase
+      .auth()
+      .signInWithPhoneNumber(mail)
+      .then(confirmResult => setcon(confirmResult)
+      )
+      .catch(error => {
+        alert(error.message)
+        console.log(error)
+      })
+  };
+
+
     function forgetPass(){
         firebase.auth().sendPasswordResetEmail(mail)
       .then(

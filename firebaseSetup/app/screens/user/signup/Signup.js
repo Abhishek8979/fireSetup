@@ -127,7 +127,6 @@ function UserScreen() {
               .confirm(check)
               .then(user => {
                 //this.setState({ userId: user.uid })
-                createUserDatabase(user.uid)
                 alert(`Verified! ${user.uid}`)
               })
               .catch(error => {
@@ -139,18 +138,7 @@ function UserScreen() {
           }
     }
 
-    function createUserDatabase(getuid){
-        // the_uid = userId
-        const data = {
-            contact: mob,
-            userId: getuid
-        }
-        firebase.firestore().doc(`users/${getuid}`).set(data)
-            .then(() => {
-                console.log("New poll data sent!")
-            })
-            .catch(error => console.log("Error when creating new poll.", error));
-    }
+   
    
     function mobLogin(){
         firebase

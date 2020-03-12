@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "26062590046",
+    "firebase_url": "https://firesetup-23584.firebaseio.com",
+    "project_id": "firesetup-23584",
+    "storage_bucket": "firesetup-23584.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26062590046:android:4b8d7a2741eb5ae7c8e4cf",
+        "android_client_info": {
+          "package_name": "com.firesetup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26062590046-cep53etjpi8ot1bmu4uflmfklmgg5huj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.firesetup",
+            "certificate_hash": "81475cbf2132cb6dd63be70920e55cbf5c309d65"
+          }
+        },
+        {
+          "client_id": "26062590046-ecqpuhk4nigt8sa0906mhhn55c0lqaf5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwBAiscJtWoy1fP9Wtcr1067TxcasJe1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26062590046-ecqpuhk4nigt8sa0906mhhn55c0lqaf5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "26062590046-mjq5g9t0l2gp94boqj2gvqmu376v2mvl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.fireSetup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
